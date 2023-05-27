@@ -47,7 +47,6 @@
     <h1>Завдання</h1>
 </div>
 
-<!-- Код для додавання завдання -->
 <div class="container mt-3">
     <form>
         <div class="mb-3">
@@ -66,60 +65,39 @@
     </form>
 </div>
 
-<!-- Код для відображення завдань -->
 <div class="container mt-5" id="taskList">
-    <!-- Завдання будуть додаватись сюди через JavaScript -->
 </div>
 
 <script>
-    // Завантаження завдань з localStorage
-    var tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-
-    // Функція для збереження завдань у localStorage
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
     function saveTasks() {
         localStorage.setItem("tasks", JSON.stringify(tasks));
     }
-
-    // Функція для додавання завдання
     function addTask() {
-        // Отримуємо значення полів форми
-        var taskTitle = document.getElementById("taskTitle").value;
-        var taskDescription = document.getElementById("taskDescription").value;
-        var taskDeadline = document.getElementById("taskDeadline").value;
-
-        // Створюємо об'єкт з введеними даними
-        var task = {
+        let taskTitle = document.getElementById("taskTitle").value;
+        let taskDescription = document.getElementById("taskDescription").value;
+        let taskDeadline = document.getElementById("taskDeadline").value;
+        let task = {
             title: taskTitle,
             description: taskDescription,
             deadline: taskDeadline
         };
 
-        // Додаємо завдання до масиву
         tasks.push(task);
-
-        // Оновлюємо відображення завдань
         displayTasks();
-
-        // Зберігаємо завдання у localStorage
         saveTasks();
 
-        // Очищаємо поля форми
         document.getElementById("taskTitle").value = "";
         document.getElementById("taskDescription").value = "";
         document.getElementById("taskDeadline").value = "";
     }
 
-    // Функція для відображення завдань
     function displayTasks() {
-        var taskList = document.getElementById("taskList");
+        let taskList = document.getElementById("taskList");
         taskList.innerHTML = "";
-
-        // Проходимося по всіх завданнях у масиві
-        for (var i = 0; i < tasks.length; i++) {
-            var task = tasks[i];
-
-            // Створюємо HTML-код для кожного завдання
-            var taskCard = `
+        for (let i = 0; i < tasks.length; i++) {
+            let task = tasks[i];
+            let taskCard = `
                 <div class="card mb-3">
                     <div class="card-body">
                         <h5 class="card-title">${task.title}</h5>
@@ -130,45 +108,26 @@
                     </div>
                 </div>
             `;
-
-            // Додаємо завдання до списку
             taskList.innerHTML += taskCard;
         }
     }
-
-    // Функція для редагування завдання
     function editTask(index) {
-        // Отримуємо завдання за індексом
-        var task = tasks[index];
+        let task = tasks[index];
 
-        // Заповнюємо поля форми зі значеннями завдання
         document.getElementById("taskTitle").value = task.title;
         document.getElementById("taskDescription").value = task.description;
         document.getElementById("taskDeadline").value = task.deadline;
 
-        // Видаляємо завдання зі списку
         tasks.splice(index, 1);
-
-        // Оновлюємо відображення завдань
         displayTasks();
-
-        // Зберігаємо завдання у localStorage
         saveTasks();
     }
 
-    // Функція для видалення завдання
     function deleteTask(index) {
-        // Видаляємо завдання зі списку
         tasks.splice(index, 1);
-
-        // Оновлюємо відображення завдань
         displayTasks();
-
-        // Зберігаємо завдання у localStorage
         saveTasks();
     }
-
-    // Відображення початкових завдань при завантаженні сторінки
     displayTasks();
 </script>
 
