@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class TaskController {
     @GetMapping("/task")
-    public String index(Model model) {
+    public String taskController(Model model) {
         return "task-main";
     }
 }
