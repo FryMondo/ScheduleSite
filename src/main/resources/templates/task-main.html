@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title th:text="Завдання"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -17,27 +17,12 @@
         <span class="fs-4">Task Schedule</span>
     </a>
     <hr>
-    <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item">
-            <a href="/" class="nav-link text-white" aria-current="page">
-                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
-                Home
-            </a>
-        </li>
-        <li>
-            <a href="/task" class="nav-link text-white">
-                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
-                Tasks
-            </a>
-        </li>
-    </ul>
-    <hr>
     <div class="dropdown">
         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            <strong>FryMondo</strong>
+            <strong>username</strong>
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-            <li><a class="dropdown-item" href="#">Sign out</a></li>
+            <li><a class="dropdown-item" href="/login">Sign out</a></li>
         </ul>
     </div>
 </div>
@@ -60,8 +45,25 @@
             <label for="taskDeadline" class="form-label">Термін виконання</label>
             <input type="date" class="form-control" id="taskDeadline">
         </div>
+        <div class="mb-3">
+            <label for="taskPriority" class="form-label">Пріоритет</label>
+            <select class="form-control" id="taskPriority">
+                <option value="1">1 (найважливіше)</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5 (найменш важливе)</option>
+            </select>
+        </div>
         <button type="button" class="btn btn-primary" onclick="addTask()">Додати завдання</button>
     </form>
+</div>
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-secondary me-2" onclick="sortByDate()">Сортування за датою</button>
+        <button type="button" class="btn btn-secondary" onclick="sortByPriority()">Сортування за пріоритетом</button>
+    </div>
 </div>
 
 <div class="container mt-5" id="taskList">
@@ -69,17 +71,22 @@
 
 <script>
     let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
     function saveTasks() {
         localStorage.setItem("tasks", JSON.stringify(tasks));
     }
+
     function addTask() {
         let taskTitle = document.getElementById("taskTitle").value;
         let taskDescription = document.getElementById("taskDescription").value;
         let taskDeadline = document.getElementById("taskDeadline").value;
+        let taskPriority = document.getElementById("taskPriority").value;
+
         let task = {
             title: taskTitle,
             description: taskDescription,
-            deadline: taskDeadline
+            deadline: taskDeadline,
+            priority: taskPriority
         };
 
         tasks.push(task);
@@ -89,6 +96,7 @@
         document.getElementById("taskTitle").value = "";
         document.getElementById("taskDescription").value = "";
         document.getElementById("taskDeadline").value = "";
+        document.getElementById("taskPriority").value = "1";
     }
 
     function displayTasks() {
@@ -97,25 +105,29 @@
         for (let i = 0; i < tasks.length; i++) {
             let task = tasks[i];
             let taskCard = `
-                <div class="card mb-3">
+                <div class="card mb-3${task.completed ? ' bg-secondary text-white' : ''}">
                     <div class="card-body">
                         <h5 class="card-title">${task.title}</h5>
                         <p class="card-text">${task.description}</p>
                         <p class="card-text">Термін виконання: ${task.deadline}</p>
+                        <p class="card-text">Пріоритет: ${task.priority}</p>
                         <button type="button" class="btn btn-primary" onclick="editTask(${i})">Редагувати</button>
                         <button type="button" class="btn btn-danger" onclick="deleteTask(${i})">Видалити</button>
+                        <button type="button" class="btn btn-secondary" onclick="toggleCompleted(${i})">${task.completed ? 'Невиконане' : 'Виконане'}</button>
                     </div>
                 </div>
             `;
             taskList.innerHTML += taskCard;
         }
     }
+
     function editTask(index) {
         let task = tasks[index];
 
         document.getElementById("taskTitle").value = task.title;
         document.getElementById("taskDescription").value = task.description;
         document.getElementById("taskDeadline").value = task.deadline;
+        document.getElementById("taskPriority").value = task.priority;
 
         tasks.splice(index, 1);
         displayTasks();
@@ -127,6 +139,23 @@
         displayTasks();
         saveTasks();
     }
+
+    function toggleCompleted(index) {
+        tasks[index].completed = !tasks[index].completed;
+        displayTasks();
+        saveTasks();
+    }
+
+    function sortByDate() {
+        tasks.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
+        displayTasks();
+    }
+
+    function sortByPriority() {
+        tasks.sort((a, b) => a.priority - b.priority);
+        displayTasks();
+    }
+
     displayTasks();
 </script>
 
