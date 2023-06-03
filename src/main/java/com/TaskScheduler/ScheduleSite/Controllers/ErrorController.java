@@ -1,4 +1,4 @@
-package com.TaskScheduler.ScheduleSite.controllers;
+package com.TaskScheduler.ScheduleSite.Controllers;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;

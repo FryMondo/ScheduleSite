@@ -1,4 +1,4 @@
-package com.TaskScheduler.ScheduleSite.controllers;
+package com.TaskScheduler.ScheduleSite.Controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
