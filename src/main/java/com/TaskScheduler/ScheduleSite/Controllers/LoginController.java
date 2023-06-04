@@ -17,19 +17,19 @@ public class LoginController {
         this.userService = userService;
     }
 
-    @GetMapping("/login")
+    @GetMapping("/")
     public String login() {
         return "login";
     }
 
-    @PostMapping("/login")
+    @PostMapping("/")
     public String signIn(@RequestParam String username, @RequestParam String password, RedirectAttributes redirectAttributes) {
         Optional<User> user = userService.findByUsername(username);
         if (user.isPresent() && userService.checkPassword(user.get(), password)) {
-            return "redirect:/";
+            return "redirect:/mainPage";
         } else {
             redirectAttributes.addFlashAttribute("error", "Invalid username or password");
-            return "redirect:/login";
+            return "redirect:/";
         }
     }
 }
