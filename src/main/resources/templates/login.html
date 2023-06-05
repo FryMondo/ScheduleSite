@@ -12,18 +12,19 @@
 </head>
 <body>
 <div class="container mt-5">
-    <h1>Please sign in</h1>
+    <h1>Вхід на сайт TaskSchedule</h1>
     <form th:action="@{/}" method="post">
         <div class="mb-3">
-            <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username">
+            <label for="username" class="form-label">Ім'я користувача</label>
+            <input type="text" class="form-control" id="username" name="username"
+                   placeholder="Введіть ім'я користувача">
         </div>
         <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
+            <label for="password" class="form-label">Пароль</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Введіть пароль">
         </div>
-        <button type="submit" class="btn btn-primary">Sign in</button>
-        <a href="/registration" class="btn btn-secondary">Sign up</a>
+        <button type="submit" class="btn btn-primary">Вхід</button>
+        <a href="/registration" class="btn btn-secondary">Регістрація</a>
     </form>
 </div>
 
