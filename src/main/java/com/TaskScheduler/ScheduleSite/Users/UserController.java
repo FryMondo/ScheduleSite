@@ -23,7 +23,8 @@ public class UserController {
     @PostMapping("/register")
     public String registerUser(@ModelAttribute("user") User user, Model model) {
         userService.register(user);
-        model.addAttribute("message", "Користувач успішно доданий на сайт!");
+        model.addAttribute("message", "Користувач успішно доданий на сайт! " +
+                "Перейдіть на сторінку входу!");
         return "registration";
     }
 }
