@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title th:text="Login"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>
+        body {
+            background: linear-gradient(to bottom right, white, lightgreen, lightskyblue) fixed;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Вхід на сайт TaskSchedule</h1>
+    <form th:action="@{/}" method="post">
+        <div class="mb-3">
+            <label for="username" class="form-label">Ім'я користувача</label>
+            <input type="text" class="form-control" id="username" name="username"
+                   placeholder="Введіть ім'я користувача">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Пароль</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Введіть пароль">
+        </div>
+        <button type="submit" class="btn btn-primary">Вхід</button>
+        <a href="/registration" class="btn btn-secondary">Регістрація</a>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
